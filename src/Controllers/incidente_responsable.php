@@ -77,6 +77,5 @@ if ($idResp) {
         $stmt->close();
     }
 }
-// Nota: No cerramos la conexión aquí porque este archivo se incluye 
-// dentro de una vista que podría necesitarla más abajo.
+
 ?>

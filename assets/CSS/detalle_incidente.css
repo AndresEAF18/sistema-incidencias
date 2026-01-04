@@ -1,0 +1,273 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    background: #f5f6f7;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* ==========================
+   TARJETA PRINCIPAL
+========================== */
+.card {
+    width: 70%;
+    background: #ffffff;
+    padding: 35px;
+    margin-top: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   TÍTULOS
+========================== */
+.card h3 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #111418;
+}
+
+.titulo-incidente {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1f2937;
+}
+
+/* ==========================
+   NARRATIVA
+========================== */
+.narrativa {
+    background: #f9fafb;
+    padding: 25px;
+    border-radius: 14px;
+    border-left: 4px solid #111418;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.narrativa p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.narrativa strong {
+    color: #111418;
+}
+
+/* ==========================
+   MAPA
+========================== */
+#map {
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+
+/* ==========================
+   EVIDENCIA
+========================== */
+.evidencia-usuario {
+    margin: 15px 0;
+}
+
+.evidencia-usuario img {
+    max-width: 30%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.evidencia-usuario img:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================
+   BOTONES
+========================== */
+.btn {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 20px;
+    background: #111418;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: white;
+    color: #111418;
+    border: 1px solid #111418;
+}
+
+/* ==========================
+   GESTIÓN DEL RESPONSABLE
+========================== */
+.titulo-responsable {
+    font-size: 24px;
+    font-weight: 800;
+    margin-top: 35px;
+    color: #111418;
+}
+
+/* Formulario */
+.form-responsable {
+    margin-top: 20px;
+    background: #f9fafb;
+    padding: 25px;
+    border-radius: 14px;
+    border-left: 4px solid #111418;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.form-responsable .grupo {
+    margin-bottom: 18px;
+}
+
+.form-responsable label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-responsable select,
+.form-responsable textarea,
+.form-responsable input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+}
+
+.form-responsable select:focus,
+.form-responsable textarea:focus,
+.form-responsable input:focus {
+    border-color: #111418;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+}
+
+/* Botón Guardar */
+.btn-guardar {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: #111418;
+    color: white;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.25s ease-in-out;
+}
+
+.btn-guardar:hover {
+    background: white;
+    color: #111418;
+    border: 1px solid #111418;
+}
+
+/* ==========================
+   INCIDENTE RESUELTO
+========================== */
+.comentario-resuelto {
+    margin-top: 20px;
+    background: #f9fafb;
+    padding: 25px;
+    border-radius: 14px;
+    border-left: 4px solid #16a34a;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.comentario-resuelto h4 {
+    margin-bottom: 18px;
+    color: #065f46;
+}
+
+.grupo-resuelto {
+    margin-bottom: 14px;
+}
+
+.grupo-resuelto label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #374151;
+}
+
+.grupo-resuelto .contenido {
+    background: #f7f9fb;
+    border: 1px solid #dce3eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+}
+
+
+
+
+/* ==========================
+   SEGUIMIENTO DEL INCIDENTE
+========================== */
+
+.seguimiento {
+    background: #f9fafb;
+    padding: 22px;
+    border-radius: 14px;
+    margin-top: 15px;
+    border-left: 4px solid #111418;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.seguimiento p {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.seguimiento strong {
+    color: #111418;
+}
+
+/* Separador interno */
+.seguimiento hr {
+    border: none;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 18px 0;
+}
+
+/* ==========================
+   SEGUIMIENTO RESUELTO (VERDE)
+========================== */
+
+.seguimiento-resuelto {
+    background: #ecfdf5;
+    border-left: 6px solid #16a34a;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+}
+
+.seguimiento-resuelto strong {
+    color: #065f46;
+}

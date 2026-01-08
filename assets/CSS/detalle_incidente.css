@@ -1,4 +1,6 @@
-
+/* =========================================
+   ESTILOS GENERALES Y CUERPO
+   ========================================= */
 body {
     margin: 0;
     padding: 0;
@@ -10,44 +12,38 @@ body {
     min-height: 100vh;
 }
 
-/* ==========================
-   TARJETA PRINCIPAL
-========================== */
 .card {
     width: 70%;
     background: #ffffff;
     padding: 35px;
-    margin-top: 40px;
+    margin: 40px 0;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    animation: fadeIn 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 25px 0;
 }
 
-/* ==========================
-   TÍTULOS
-========================== */
-.card h3 {
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 18px;
-    color: #111418;
-}
-
+/* =========================================
+   TÍTULOS Y NARRATIVA
+   ========================================= */
 .titulo-incidente {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #1f2937;
+    color: #000000;
 }
 
-/* ==========================
-   NARRATIVA
-========================== */
+.titulo-responsable {
+    font-size: 24px;
+    font-weight: 800;
+    margin-top: 35px;
+    color: #000000;
+}
+
 .narrativa {
     background: #f9fafb;
     padding: 25px;
@@ -63,211 +59,202 @@ body {
     color: #333;
 }
 
-.narrativa strong {
-    color: #111418;
+/* =========================================
+   ESTILOS ESPECÍFICOS SEGUIMIENTO USUARIO
+   ========================================= */
+.estado-box { 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin-bottom: 20px; 
+    border-left: 6px solid #ccc; 
+    background: #f9f9f9; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-/* ==========================
-   MAPA
-========================== */
-#map {
-    border-radius: 14px;
-    overflow: hidden;
-    margin: 15px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+/* Colores dinámicos por estado */
+.estado-pendiente { border-left-color: #007bff; background: #e7f3ff; }
+.estado-en-proceso { border-left-color: #17a2b8; background: #e1f5f7; }
+.estado-no-resuelto { border-left-color: #ffc107; background: #fff9e6; }
+.estado-resuelto { border-left-color: #28a745; background: #e9f7ef; }
+
+.info-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    margin-top: 15px; 
 }
 
-/* ==========================
-   EVIDENCIA
-========================== */
-.evidencia-usuario {
-    margin: 15px 0;
+.info-item { 
+    font-size: 0.95em; 
+    color: #000000;
 }
 
-.evidencia-usuario img {
-    max-width: 30%;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
+.btn-acta { 
+    background: #28a745; 
+    color: white; 
+    padding: 12px 18px; 
+    text-decoration: none; 
+    border-radius: 8px; 
+    display: inline-block; 
+    margin-top: 10px; 
+    font-weight: bold; 
+    transition: background 0.3s;
 }
 
-.evidencia-usuario img:hover {
-    transform: scale(1.05);
+.btn-acta:hover {
+    background: #218838;
 }
 
-/* ==========================
-   BOTONES
-========================== */
-.btn {
-    display: inline-block;
-    margin-top: 22px;
-    padding: 12px 20px;
+/* =========================================
+   BADGES (PRIORIDAD Y ESTADO)
+   ========================================= */
+.badge-prioridad {
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Soporte para clases prio-X y prioridad-X */
+.prioridad-1, .prio-1 { background: #d9534f; }
+.prioridad-2, .prio-2 { background: #f0ad4e; }
+.prioridad-3, .prio-3 { background: #5bc0de; }
+
+.badge-estado {
     background: #111418;
     color: white;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: 0.2s ease;
+    padding: 4px 10px;
+    border-radius: 6px;
 }
 
-.btn:hover {
-    background: white;
-    color: #111418;
-    border: 1px solid #111418;
-}
-
-/* ==========================
-   GESTIÓN DEL RESPONSABLE
-========================== */
-.titulo-responsable {
-    font-size: 24px;
-    font-weight: 800;
-    margin-top: 35px;
-    color: #111418;
-}
-
-/* Formulario */
+/* =========================================
+   FORMULARIO Y SECCIONES DINÁMICAS
+   ========================================= */
 .form-responsable {
     margin-top: 20px;
-    background: #f9fafb;
-    padding: 25px;
-    border-radius: 14px;
-    border-left: 4px solid #111418;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.form-responsable .grupo {
+.grupo-vertical {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 18px;
 }
 
-.form-responsable label {
-    display: block;
+.grupo-vertical label {
     font-weight: 600;
-    margin-bottom: 6px;
-    color: #333;
+    margin-bottom: 8px;
+    color: #000000;
 }
 
-.form-responsable select,
-.form-responsable textarea,
-.form-responsable input {
-    width: 100%;
+.grupo-vertical input, 
+.grupo-vertical textarea, 
+.grupo-vertical select {
     padding: 12px;
-    border: 1px solid #c9c9c9;
+    border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 15px;
-    background: white;
-}
-
-.form-responsable select:focus,
-.form-responsable textarea:focus,
-.form-responsable input:focus {
-    border-color: #111418;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
-}
-
-/* Botón Guardar */
-.btn-guardar {
     width: 100%;
+    box-sizing: border-box;
+}
+
+.bloque-estado {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+    margin: 15px 0;
+    border-left: 4px solid #111418;
+}
+
+.titulo-seccion {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #111418;
+}
+
+/* =========================================
+   ESTADOS DE BLOQUEO Y MENSAJES
+   ========================================= */
+.mensaje-bloqueo {
+    background: #fff3cd;
+    color: #856404;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ffeeba;
+    text-align: center;
+    font-weight: bold;
+}
+
+input:disabled, textarea:disabled, select:disabled {
+    background-color: #f0f0f0 !important;
+    color: #777;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   BOTONES
+   ========================================= */
+/* Botón Guardar / Actualizar */
+.btn-guardar {
     padding: 14px;
-    border: none;
+    border: 2px solid #111418;
     background: #111418;
     color: white;
     font-size: 16px;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 700;
-    transition: 0.25s ease-in-out;
+    transition: 0.3s;
 }
 
-.btn-guardar:hover {
-    background: white;
-    color: #111418;
-    border: 1px solid #111418;
-}
-
-/* ==========================
-   INCIDENTE RESUELTO
-========================== */
-.comentario-resuelto {
-    margin-top: 20px;
-    background: #f9fafb;
-    padding: 25px;
-    border-radius: 14px;
-    border-left: 4px solid #16a34a;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-.comentario-resuelto h4 {
-    margin-bottom: 18px;
-    color: #065f46;
-}
-
-.grupo-resuelto {
-    margin-bottom: 14px;
-}
-
-.grupo-resuelto label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 5px;
-    color: #374151;
-}
-
-.grupo-resuelto .contenido {
-    background: #f7f9fb;
-    border: 1px solid #dce3eb;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 14px;
-}
-
-
-
-
-/* ==========================
-   SEGUIMIENTO DEL INCIDENTE
-========================== */
-
-.seguimiento {
-    background: #f9fafb;
-    padding: 22px;
-    border-radius: 14px;
-    margin-top: 15px;
-    border-left: 4px solid #111418;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.seguimiento p {
-    font-size: 16px;
-    margin-bottom: 12px;
-    color: #333;
-    line-height: 1.5;
-}
-
-.seguimiento strong {
+.btn-guardar:hover:not(:disabled) {
+    background-color: #ffffff;
     color: #111418;
 }
 
-/* Separador interno */
-.seguimiento hr {
+/* Botón Reabrir */
+.btn-reabrir {
+    background: #dc3545;
+    color: white;
+    padding: 12px;
     border: none;
-    height: 1px;
-    background: #e5e7eb;
-    margin: 18px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    width: 100%;
+    transition: 0.3s;
 }
 
-/* ==========================
-   SEGUIMIENTO RESUELTO (VERDE)
-========================== */
-
-.seguimiento-resuelto {
-    background: #ecfdf5;
-    border-left: 6px solid #16a34a;
-    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+.btn-reabrir:hover {
+    background: #a71d2a;
 }
 
-.seguimiento-resuelto strong {
-    color: #065f46;
+/* Botón Volver (Negro a Blanco) */
+.btn {
+    display: inline-block;
+    background-color: #111418;
+    color: #ffffff;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #111418;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #ffffff;
+    color: #111418;
+}
+
+/* =========================================
+   MAPA
+   ========================================= */
+#map {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }

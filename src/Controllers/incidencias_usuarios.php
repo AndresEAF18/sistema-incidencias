@@ -96,4 +96,3 @@ if($resCat) {
     }
 }
 
-// Nota: No cerramos $conexion aquí para dejar que el View termine de usarla si es necesario.

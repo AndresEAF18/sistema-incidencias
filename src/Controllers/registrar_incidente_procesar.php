@@ -21,7 +21,6 @@ $descripcion    = trim($_POST['descripcion'] ?? '');
 $ubicacion      = trim($_POST['ubicacion'] ?? '');
 $idCategoria    = intval($_POST['categoria'] ?? 0);
 $idSubcategoria = intval($_POST['subcategoria'] ?? 0);
-
 /* ==========================
    Validaciones y Redirección a la Vista de Confirmación
 ========================== */
@@ -30,7 +29,6 @@ if (empty($titulo) || empty($descripcion) || empty($ubicacion) || $idCategoria <
     header("Location: ../Views/incidente_confirmado.php?msg=" . urlencode("Por favor completa todos los campos."));
     exit();
 }
-
 /* ==========================
    Asignación automática de prioridad
 ========================== */
@@ -49,7 +47,6 @@ switch ($idCategoria) {
     default:
         $idPrioridad = 2;
 }
-
 /* ==========================
    Asignación automática de responsable
 ========================== */

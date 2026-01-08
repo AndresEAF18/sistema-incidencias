@@ -18,8 +18,8 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// 4. CONSULTA DETALLADA
-// Usamos LEFT JOIN en responsables para que los incidentes "Pendientes" sean visibles
+// 4. CONSULTA DETALLADA ACTUALIZADA
+// Añadimos todos los campos nuevos de la tabla para que la vista pueda usarlos
 $sql = "SELECT 
             i.idIncidente,
             i.titulo,
@@ -28,13 +28,20 @@ $sql = "SELECT
             c.nombre AS categoria,
             s.nombre AS subcategoria,
             i.idPrioridad,
+            i.analisisRiesgo,
             i.estado,
             i.fechaRegistro,
             i.fechaCierre,
+            i.agente_encargado,
+            i.unidad_id,
+            i.comentario,
             i.accionRealizada,
+            i.motivoPausa,
+            i.fechaReanudacion,
             i.resultadoObtenido,
             i.observacionesFinales,
             i.tiempoResolucion,
+            i.acta_ruta,
             u.nombre AS usuario,
             r.nombre AS responsable
         FROM incidentes i
@@ -45,7 +52,7 @@ $sql = "SELECT
         WHERE i.idIncidente = ? AND i.idUsuario = ?";
 
 $stmt = $conexion->prepare($sql);
-// Blindamos la consulta: solo el dueño del incidente puede verlo
+// Seguridad: i.idUsuario = ? asegura que un usuario no pueda ver incidentes de otros cambiando el ID en la URL
 $stmt->bind_param("ii", $id, $idUsuarioSesion);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -53,5 +60,4 @@ $result = $stmt->get_result();
 $detalle = $result->fetch_assoc();
 
 $stmt->close();
-// Dejamos la conexión abierta por si la vista necesita realizar otras consultas menores
 ?>

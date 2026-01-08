@@ -1,16 +1,12 @@
 <?php 
 session_start();
-// 1. Seguridad: Verificar sesión
 if(!isset($_SESSION['id']) || $_SESSION['tipo'] != 'usuario'){
     header("Location: /incidencias/public/index.html");
     exit();
 }
 
-// 2. Incluimos la lógica (Controlador) que buscará los datos en la BD
-// Pasamos el ID por la URL, por lo que el controlador lo recibirá vía $_GET
 include_once "../Controllers/detalle_incidente_logica.php";
 
-// Si el controlador no encuentra el incidente o no pertenece al usuario, $detalle estará vacío
 if (!$detalle) {
     echo "<script>alert('Incidente no encontrado o acceso denegado.'); window.location.href='historial_incidentes.php';</script>";
     exit();
@@ -23,114 +19,102 @@ if (!$detalle) {
     <title>Detalle del Incidente #<?= htmlspecialchars($detalle['idIncidente']) ?></title>
     <link rel="stylesheet" href="/incidencias/assets/css/detalle_incidente.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
 <div class="card">
-
     <h3>Resumen del Incidente</h3>
-    <h3 class="titulo-incidente"><?= $detalle['titulo'] ?></h3>
+    <h3 class="titulo-incidente"><?= htmlspecialchars($detalle['titulo']) ?></h3>
 
     <div class="narrativa">
+        <p>• Descripción: <strong> <?= htmlspecialchars($detalle['descripcion']) ?> </strong></p>
+        <div class="info-grid">
+            <div class="info-item">• Categoría: <strong><?= $detalle['categoria'] ?></strong></div>
+            <div class="info-item">• Subcategoría: <strong><?= $detalle['subcategoria'] ?></strong></div>
+            <div class="info-item">• Fecha: <strong><?= $detalle['fechaRegistro'] ?></strong></div>
+            <div class="info-item">• Prioridad: 
+                <span class="badge-prioridad prio-<?= $detalle['idPrioridad'] ?>">
+                    <?= ($detalle['idPrioridad']==1?"Alta":($detalle['idPrioridad']==2?"Media":"Baja")) ?>
+                </span>
+            </div>
+        </div>
 
-        <p>• Incidente reportado por <strong><?= $detalle['usuario'] ?></strong>.</p>
-        <p>• Fecha de registro: <strong><?= $detalle['fechaRegistro'] ?></strong>.</p>
-        <p>• Ubicación del incidente: <strong><?= $detalle['ubicacion'] ?></strong>.</p>
-
-        <!-- MAPA -->
-        <div id="map" style="height:300px; width:100%; margin-top:10px;"></div>
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
+        <div id="map" style="height:250px; width:100%; margin:15px 0; border-radius: 8px;"></div>
+        
         <?php 
-        $coords = explode(',', $detalle['ubicacion']);
-        $lat = $coords[0] ?? 0;
-        $lng = $coords[1] ?? 0;
+            $coords = explode(',', $detalle['ubicacion']);
+            $lat = trim($coords[0] ?? 0);
+            $lng = trim($coords[1] ?? 0);
         ?>
-
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script>
             var map = L.map('map').setView([<?= $lat ?>, <?= $lng ?>], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             L.marker([<?= $lat ?>, <?= $lng ?>]).addTo(map);
         </script>
-
-        <p>• Descripción del incidente: <strong><?= $detalle['descripcion'] ?></strong></p>
-
-   
-
-        <p>• Categoría: <strong><?= $detalle['categoria'] ?></strong></p>
-
-        <p>• Subcategoría: <strong><?= $detalle['subcategoria'] ?></strong></p>
-
-        <p>• Prioridad asignada:
-            <strong>
-                <?= ($detalle['idPrioridad']==1?"Alta":($detalle['idPrioridad']==2?"Media":"Baja")) ?>
-            </strong>
-        </p>
     </div>
 
     <hr>
 
-    <!-- =========================
-         SEGUIMIENTO / RESOLUCIÓN
-    ========================== -->
+    <h3 class="titulo-responsable">Seguimiento en Tiempo Real</h3>
 
-    <h3 class="titulo-responsable">Seguimiento del Incidente</h3>
+    <div class="estado-box estado-<?= strtolower(str_replace(' ', '-', $detalle['estado'])) ?>">
+        
+        <p style="font-size: 1.1em;"><strong>Responsable Asignado:</strong> <?= htmlspecialchars($detalle['responsable'] ?: 'Pendiente') ?></p>
+        <p style="font-size: 1.2em;"><strong>Estado Actual:</strong> <span class="badge-estado"><?= strtoupper($detalle['estado']) ?></span></p>
 
+        <hr style="opacity: 0.2;">
 
+        <?php if ($detalle['estado'] == "Pendiente"): ?>
+            <p><strong>El sistema ha recibido tu reporte, el responsable está revisando los detalles y el análisis de riesgo para asignar unidades.</strong></p>
+            <?php if(!empty($detalle['comentario'])): ?>
+                <p><strong>Comentario inicial:</strong> <?= htmlspecialchars($detalle['comentario']) ?></p>
+            <?php endif; ?>
 
-<div class="seguimiento <?= strtolower(str_replace(' ', '-', $detalle['estado'])) == 'resuelto' ? 'seguimiento-resuelto' : '' ?>">
+        <?php elseif ($detalle['estado'] == "En Proceso"): ?>
+            <p><i class="fas fa-running"></i> <strong>¡Tu incidente está siendo atendido!</strong></p>
+            <?php if(!empty($detalle['agente_encargado'])): ?>
+                <p>• <strong>Agente a cargo:</strong> <?= htmlspecialchars($detalle['agente_encargado']) ?></p>
+            <?php endif; ?>
+            <?php if(!empty($detalle['unidad_id'])): ?>
+                <p>• <strong>Unidad asignada:</strong> <?= htmlspecialchars($detalle['unidad_id']) ?></p>
+            <?php endif; ?>
+            <?php if(!empty($detalle['accionRealizada'])): ?>
+                <p>• <strong>Acciones actuales:</strong> <?= nl2br(htmlspecialchars($detalle['accionRealizada'])) ?></p>
+            <?php endif; ?>
 
- 
-  <p><strong>Asignación:</strong> El incidente fue asignado al responsable 
-        <strong><?= $detalle['responsable'] ?></strong>.
-    </p>
+        <?php elseif ($detalle['estado'] == "No Resuelto"): ?>
+            <p><i class="fas fa-exclamation-triangle"></i> <strong>Atención: El proceso se ha detenido.</strong></p>
+            <p>• <strong>Agente a cargo:</strong> <?= htmlspecialchars($detalle['agente_encargado']) ?></p>
+            
+            <p>• <strong>Unidad asignada:</strong> <?= htmlspecialchars($detalle['unidad_id']) ?></p>
 
-<p><strong>Estado actual:</strong>
-        <span class="estado estado-<?= strtolower(str_replace(' ', '-', $detalle['estado'])) ?>">
-    <?= $detalle['estado'] ?>
-</span>
+            <p>• <strong>Motivo del cierre:</strong> <?= htmlspecialchars($detalle['motivoPausa'] ?? 'No especificado') ?></p>
+            <?php if(!empty($detalle['observacionesFinales'])): ?>
+                <p>• <strong>Detalles adicionales:</strong> <?= nl2br(htmlspecialchars($detalle['observacionesFinales'])) ?></p>
+            <?php endif; ?>
 
-    </p>
+        <?php elseif ($detalle['estado'] == "Resuelto"): ?>
+            <p><i class="fas fa-check-circle"></i> <strong>Incidente Finalizado con éxito.</strong></p>
+            <p>• <strong>Agente a cargo:</strong> <?= htmlspecialchars($detalle['agente_encargado']) ?></p>
+            
+            <p>• <strong>Unidad asignada:</strong> <?= htmlspecialchars($detalle['unidad_id']) ?></p>
+            <p>• <strong>Resultado final:</strong> <?= nl2br(htmlspecialchars($detalle['resultadoObtenido'])) ?></p>
+            <p>• <strong>Fecha de cierre:</strong> <?= $detalle['fechaCierre'] ?></p>
+            
+            <?php if (!empty($detalle['acta_ruta'])): ?>
+                <div style="margin-top: 15px;">
+                    <a href="<?= htmlspecialchars($detalle['acta_ruta']) ?>" target="_blank" class="btn-acta">
+                        📂 Ver Acta de Resolución Final
+                    </a>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
-
-    <?php if (!empty($detalle['accionRealizada'])): ?>
-        <p><strong>Acción realizada:</strong>
-            <?= nl2br($detalle['accionRealizada']) ?>
-        </p>
-    <?php endif; ?>
-
-    <?php if (!empty($detalle['resultadoObtenido'])): ?>
-        <p><strong>Resultado obtenido:</strong>
-            <?= nl2br($detalle['resultadoObtenido']) ?>
-        </p>
-    <?php endif; ?>
-
-    <?php if (!empty($detalle['observacionesFinales'])): ?>
-        <p><strong>Observaciones finales:</strong>
-            <?= nl2br($detalle['observacionesFinales']) ?>
-        </p>
-    <?php endif; ?>
-
-    <?php if (!empty($detalle['tiempoResolucion'])): ?>
-        <p><strong> Tiempo de resolución:</strong>
-            <?= $detalle['tiempoResolucion'] ?>
-        </p>
-    <?php endif; ?>
-
-     <p> <strong>Fecha de cierre:  </strong>
-           
-                <?= $detalle['fechaCierre'] ?: "<i>Aún no ha sido cerrado.</i>" ?>
-           
-        </p>
-
- 
+    <a class="btn" href="historial_incidentes.php" style="display: block; text-align: center;">Volver al Historial</a>
 </div>
-
-
-<a class="btn" href="historial_incidentes.php">Volver al Historial</a>
-
 
 </body>
 </html>

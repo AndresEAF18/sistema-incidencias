@@ -77,5 +77,3 @@ if ($idResp) {
         $stmt->close();
     }
 }
-
-?>
